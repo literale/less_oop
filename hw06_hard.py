@@ -13,10 +13,18 @@
 class Worker(object):
 
     def set_payment(self, payment):
-        self._payment = payment
+        try:
+            int_payment = int(payment)
+            self._payment = int_payment
+        except ValueError:
+            print("Некорректное значение оплаты")
 
     def set_done_hour(self, done_hour):
-        self._done_hour = done_hour
+        try:
+            int_done_hour = int(done_hour)
+            self._done_hour = int_done_hour
+        except ValueError:
+            print("Некорректное значение часов")
 
     def get_payment(self):
         return self._payment
@@ -29,14 +37,17 @@ class Worker(object):
 
     def __init__(self, init_str):
         """Constructor"""
-        list_init_str = init_str.split()
-        self.name = list_init_str[0]
-        self.second_name = list_init_str[1]
-        self.salary = list_init_str[2]
-        self.post = list_init_str[3]
-        self.norm_hour = list_init_str[4]
-        self._done_hour = 0
-        self._payment = 0
+        try:
+            list_init_str = init_str.split()
+            self.name = list_init_str[0]
+            self.second_name = list_init_str[1]
+            self.salary = list_init_str[2]
+            self.post = list_init_str[3]
+            self.norm_hour = list_init_str[4]
+            self._done_hour = 0
+            self._payment = 0
+        except IndexError:
+            print("Не хватает данных в строке (выход за пределы массива)")
 
     def __str__(self):
         return "Имя: {0} Фамилия: {1} Зарплата: {2} Должность: {3} Норма часов : {4} " \
@@ -45,17 +56,18 @@ class Worker(object):
 
     # считаем плату
     def count_payment(self):
-        extra_hour = int(self.done_hour) - int(self.norm_hour)
-        if extra_hour == 0:
-            self.payment = self.salary
-        elif extra_hour > 0:
-            pay_hour = float(self.salary)/float(self.norm_hour)
-            self.payment = int(self.salary) + int(pay_hour*extra_hour)
-        else:
-            pay_hour = float(self.salary) / float(self.norm_hour)
-            self.payment = int(self.salary) - int(pay_hour * extra_hour)
-
-
+        try:
+            extra_hour = int(self.done_hour) - int(self.norm_hour)
+            if extra_hour == 0:
+                self.payment = self.salary
+            elif extra_hour > 0:
+                pay_hour = float(self.salary)/float(self.norm_hour)
+                self.payment = int(self.salary) + int(pay_hour*extra_hour)
+            else:
+                pay_hour = float(self.salary) / float(self.norm_hour)
+                self.payment = int(self.salary) - int(pay_hour * extra_hour)
+        except ValueError:
+            print("Где-то в числовых показаьелях значение, не преобразумое в число")
 
 
 def main():
@@ -75,10 +87,14 @@ def main():
             # print(line)
             line_list = line.split()
             if count > 0:
-                for w in workers:
-                    if w.name == line_list[0] and w.second_name == line_list[1]:
-                        w.done_hour = line_list[2]
-            count += 1
+                try:
+                    for w in workers:
+                        if w.name == line_list[0] and w.second_name == line_list[1]:
+                            w.done_hour = line_list[2]
+                except IndexError:
+                    print("Не хватает данных в строке (выход за пределы массива)")
+                count += 1
+                
 
 
 
@@ -86,6 +102,7 @@ def main():
     for w in workers:
         w.count_payment()
         print(w)
+
 
 if __name__ == '__main__':
     main()
