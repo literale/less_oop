@@ -40,13 +40,13 @@ class Worker(object):
     def count_payment(self):
         extra_hour = int(self.done_hour) - int(self.norm_hour)
         if extra_hour == 0:
-            self.payment = self.salary
+            self.set_payment(self.salary)
         elif extra_hour > 0:
             pay_hour = float(self.salary)/float(self.norm_hour)
-            self.payment = int(self.salary) + int(pay_hour*extra_hour)
+            self.set_payment(int(self.salary) + int(pay_hour*extra_hour))
         else:
             pay_hour = float(self.salary) / float(self.norm_hour)
-            self.payment = int(self.salary) - int(pay_hour * extra_hour)
+            self.set_payment(int(self.salary) - int(pay_hour * extra_hour))
 
 
 
