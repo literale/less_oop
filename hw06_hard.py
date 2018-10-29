@@ -77,7 +77,7 @@ def main():
             if count > 0:
                 for w in workers:
                     if w.name == line_list[0] and w.second_name == line_list[1]:
-                        w.set_done_hour(line_list[2])
+                        w.done_hour = line_list[2]
             count += 1
 
 
