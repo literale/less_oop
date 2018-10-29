@@ -21,16 +21,13 @@ class Worker(object):
         self.salary = list_init_str[2]
         self.post = list_init_str[3]
         self.norm_hour = list_init_str[4]
-        pass
 
     def set_payment(self, payment):
         self.payment = payment
-        pass
 
     def set_done_hour(self, done_hour):
         self.done_hour = done_hour
-        pass
-
+    
     def __str__(self):
         return "Имя: {0} Фамилия: {1} Зарплата: {2} Должность: {3} Норма часов : {4} " \
                "Зарплата за месяц : {5} Отработано часов : {6}"\
