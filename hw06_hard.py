@@ -11,8 +11,22 @@
 # Реализуйте классы сотрудников так, чтобы на вход функции-конструктора
 # каждый работник получал строку из файла
 class Worker(object):
-    payment = 0
-    done_hour = 0
+
+    def set_payment(self, payment):
+        self._payment = payment
+
+    def set_done_hour(self, done_hour):
+        self._done_hour = done_hour
+
+    def get_payment(self):
+        return self._payment
+
+    def get_done_hour(self):
+        return self._done_hour
+
+    payment = property(get_payment, set_payment)
+    done_hour = property(get_done_hour, set_done_hour)
+
     def __init__(self, init_str):
         """Constructor"""
         list_init_str = init_str.split()
@@ -21,13 +35,9 @@ class Worker(object):
         self.salary = list_init_str[2]
         self.post = list_init_str[3]
         self.norm_hour = list_init_str[4]
+        self._done_hour = 0
+        self._payment = 0
 
-    def set_payment(self, payment):
-        self.payment = payment
-
-    def set_done_hour(self, done_hour):
-        self.done_hour = done_hour
-    
     def __str__(self):
         return "Имя: {0} Фамилия: {1} Зарплата: {2} Должность: {3} Норма часов : {4} " \
                "Зарплата за месяц : {5} Отработано часов : {6}"\
@@ -37,13 +47,13 @@ class Worker(object):
     def count_payment(self):
         extra_hour = int(self.done_hour) - int(self.norm_hour)
         if extra_hour == 0:
-            self.set_payment(self.salary)
+            self.payment = self.salary
         elif extra_hour > 0:
             pay_hour = float(self.salary)/float(self.norm_hour)
-            self.set_payment(int(self.salary) + int(pay_hour*extra_hour))
+            self.payment = int(self.salary) + int(pay_hour*extra_hour)
         else:
             pay_hour = float(self.salary) / float(self.norm_hour)
-            self.set_payment(int(self.salary) - int(pay_hour * extra_hour))
+            self.payment = int(self.salary) - int(pay_hour * extra_hour)
 
 
 
