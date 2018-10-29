@@ -14,15 +14,21 @@ class Worker(object):
 
     def set_payment(self, payment):
         try:
-            int_payment = int(payment)
-            self._payment = int_payment
+            int_payment = float(payment)
+            if int_payment < 0:
+                print("Отрицательное значение оплаты")
+            else:
+                self._payment = int_payment
         except ValueError:
             print("Некорректное значение оплаты")
 
     def set_done_hour(self, done_hour):
         try:
             int_done_hour = int(done_hour)
-            self._done_hour = int_done_hour
+            if int_done_hour < 0:
+                print("Отработано отрицательное колличество часов!")
+            else:
+                self._done_hour = int_done_hour
         except ValueError:
             print("Некорректное значение часов")
 
@@ -94,7 +100,7 @@ def main():
                 except IndexError:
                     print("Не хватает данных в строке (выход за пределы массива)")
                 count += 1
-                
+
 
 
 
