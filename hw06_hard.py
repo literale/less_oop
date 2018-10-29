@@ -36,6 +36,17 @@ class Worker(object):
                "Зарплата за месяц : {5} Отработано часов : {6}"\
             .format(self.name, self.second_name, self.salary, self.post, self.norm_hour, self.payment, self.done_hour)
 
+    # считаем плату
+    def count_payment(self):
+        extra_hour = int(self.done_hour) - int(self.norm_hour)
+        if extra_hour == 0:
+            self.payment = self.salary
+        elif extra_hour > 0:
+            pay_hour = float(self.salary)/float(self.norm_hour)
+            self.payment = int(self.salary) + int(pay_hour*extra_hour)
+        else:
+            pay_hour = float(self.salary) / float(self.norm_hour)
+            self.payment = int(self.salary) - int(pay_hour * extra_hour)
 
 
 
@@ -59,13 +70,14 @@ def main():
             if count > 0:
                 for w in workers:
                     if w.name == line_list[0] and w.second_name == line_list[1]:
-                        w.done_hour = line_list[2]
+                        w.set_done_hour(line_list[2])
             count += 1
 
 
 
 
     for w in workers:
+        w.count_payment()
         print(w)
 
 if __name__ == '__main__':
